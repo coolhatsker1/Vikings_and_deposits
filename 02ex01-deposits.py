@@ -48,6 +48,11 @@ def deposit(initial_sum, percent, fixed_period, set_period):
     growth = (1 + per) ** (set_period / fixed_period)
     return initial_sum * growth
 
+def common_yields(initial_sum, percent, fixed_period,k):
+        per = percent / 100
+        growth = (1 + per) ** (k / fixed_period)
+        return (initial_sum * growth) - initial_sum
+
 
 def main(args):
     """Gets called when run as a script."""
@@ -63,7 +68,15 @@ def main(args):
     # ...
 
     res = deposit(initial_sum, percent, fixed_period, set_period)
-    print(res)
+    res1m = common_yields(initial_sum, percent, fixed_period, 1)
+    res5m = common_yields(initial_sum, percent, fixed_period, 5)
+    res1y = common_yields(initial_sum, percent, fixed_period, 12)
+    res10y = common_yields(initial_sum, percent, fixed_period, 120)
+    print("Specified result: ", res)
+    print("1month yield: ", res1m)
+    print("5month yield: ", res5m)
+    print("1year yield: ", res1y)
+    print("10year yield: ", res10y)
 
 
 if __name__ == '__main__':
