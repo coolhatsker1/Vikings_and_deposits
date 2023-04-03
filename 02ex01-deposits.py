@@ -42,42 +42,37 @@ USAGE = """USAGE: {script} initial_sum percent fixed_period set_period
 USAGE = USAGE.strip()
 
 
-def deposit(initial_sum, percent, fixed_period, set_period):
+def deposit(percent, fixed_period, set_period, initial_sum):
     """Calculate deposit yield."""
     per = percent / 100
     growth = (1 + per) ** (set_period / fixed_period)
     return initial_sum * growth
-
-def common_yields(initial_sum, percent, fixed_period,k):
-        per = percent / 100
-        growth = (1 + per) ** (k / fixed_period)
-        return (initial_sum * growth) - initial_sum
-
 
 def main(args):
     """Gets called when run as a script."""
     if len(args) != 4 + 1:
         exit(USAGE.format(script=args[0]))
 
+        
     args = args[1:]
-    initial_sum, percent, fixed_period, set_period = map(float, args)
+    percent, fixed_period, set_period, initial_sum = map(float, args)
 
     # same as
-    # initial_sum = float(args[0])
+    # initial_sum = 
     # percent = float(args[1])
     # ...
 
-    res = deposit(initial_sum, percent, fixed_period, set_period)
-    res1m = common_yields(initial_sum, percent, fixed_period, 1)
-    res5m = common_yields(initial_sum, percent, fixed_period, 5)
-    res1y = common_yields(initial_sum, percent, fixed_period, 12)
-    res10y = common_yields(initial_sum, percent, fixed_period, 120)
+    res = deposit(percent, fixed_period, set_period, initial_sum)
+    res1m = deposit(percent, fixed_period, 1, initial_sum)
+    res5m = deposit(percent, fixed_period, 5, initial_sum)
+    res1y = deposit(percent, fixed_period, 12, initial_sum)
+    res10y = deposit(percent, fixed_period, 120, initial_sum)
     print("Specified result: ", res)
     print("1month yield: ", res1m)
     print("5month yield: ", res5m)
     print("1year yield: ", res1y)
     print("10year yield: ", res10y)
-
+    print("1 year percent yield(2nd task): ", res1y-initial_sum)
 
 if __name__ == '__main__':
     import sys
